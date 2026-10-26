@@ -50,7 +50,11 @@ internal class PortalLoginService {
         val encodedUsername = URLEncoder.encode(username, Charsets.UTF_8.name())
         val encodedPassword = URLEncoder.encode(password, Charsets.UTF_8.name())
 
-        return "username=$encodedUsername&******"
+        return listOf(
+            "username" to encodedUsername,
+            "password" to encodedPassword,
+            "submit" to "Login"
+        ).joinToString("&") { (key, value) -> "$key=$value" }
     }
 
     private fun insecureSocketFactory(): SSLSocketFactory {

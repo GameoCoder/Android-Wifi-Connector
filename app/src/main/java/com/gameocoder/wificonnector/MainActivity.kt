@@ -1,5 +1,8 @@
 package com.gameocoder.wificonnector
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -30,7 +33,8 @@ class MainActivity : AppCompatActivity() {
             val password = passwordInput.text.toString()
 
             executor.execute {
-                val connected = loginService.login(url, username, password)
+                val loginAccepted = loginService.login(url, username, password)
+                val connected = loginAccepted && isNetworkConnected()
                 runOnUiThread {
                     statusText.text = getString(
                         if (connected) R.string.status_connected else R.string.status_not_connected
@@ -43,5 +47,12 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         executor.shutdownNow()
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 }
