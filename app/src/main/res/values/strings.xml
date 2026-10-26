@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Wifi Connector</string>
+    <string name="portal_url_hint">Captive portal URL (Sophos)</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="status_idle">Not connected</string>
+    <string name="status_connecting">Checking connection…</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_not_connected">Not connected</string>
+</resources>
